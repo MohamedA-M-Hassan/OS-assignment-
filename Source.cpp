@@ -79,10 +79,13 @@ int main()
         switch(choice)
         {
         case 1:
-            cout<<"FCFS: "<<endl;
-			int no_of_processes;
+            int no_of_processes;
+			LinkedList arrival_time;
+			LinkedList burst;
+			cout<<"FCFS: "<<endl;
 			cout << "Please insert the number of processes\n ";
 			cin >> no_of_processes;
+			
 			break;
 		case 2:
 			cout<<"2";
