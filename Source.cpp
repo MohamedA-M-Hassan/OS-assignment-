@@ -19,7 +19,12 @@ class LinkedList
 {
 private:
 	Node* head;
+
+	string name;
+	double arrival_time;
+	double burst;
 public:
+	
 	LinkedList() { head = nullptr; }
 	bool isEmpty() 
 	{ 
@@ -27,7 +32,7 @@ public:
 		return true; 
 	return false;
 	}
-	void Add(int item) 
+	void Add(double item) 
 	{
 		if (isEmpty())
 		{
@@ -46,11 +51,10 @@ public:
 			tmp->setNext(nw);
 		}
 	}
-	void sort()
+	void sort(LinkedList x)
 	{
 		
 	}
-	
 	void printAll()
 	{
 		Node* tmp = head;
@@ -61,11 +65,73 @@ public:
 		}
 	}
 
-};
 
+	// the process functions
+	void set_name_of_process (string n)
+	{
+		name=n;
+	}
+	string get_name_of_process ()
+	{
+		return name;
+	}
+	void set_arrival_time (double t)
+	{
+		arrival_time=t;
+	}
+	double get_arrival_time ()
+	{
+		return arrival_time;
+	}
+	void set_burst (int b)
+	{
+		burst=b;
+	}
+	double get_burst ()
+	{
+		return burst;
+	}
+};
+/*class Processing 
+{
+private:
+	string name;
+	double arrival_time;
+	int burst;
+public:
+	void set_name_of_process (string n)
+	{
+		name=n;
+	}
+	string get_name_of_process ()
+	{
+		return name;
+	}
+	void set_arrival_time (double t)
+	{
+		arrival_time=t;
+	}
+	double get_arrival_time ()
+	{
+		return arrival_time;
+	}
+	void set_burst (int b)
+	{
+		burst=b;
+	}
+	int get_burst ()
+	{
+		return burst;
+	}
+};
+*/
 int main()
 {		
 		int choice;
+		int no_of_processes;
+		LinkedList arrivaltime;
+		LinkedList burst;
+		//Processing process;
 		cout<<endl<<"---------------------------------"<<endl;
         cout<<endl<<"Types of schedulers supported:"<<endl;
         cout<<endl<<"---------------------------------"<<endl;
@@ -76,16 +142,31 @@ int main()
 		cout<<"------------------------------------"<<endl;
         cout<<"Enter your choice : ";
         cin>> choice;
+		// ·Õœ Â‰« ⁄—›  «·—«Ã· ⁄«Ì“ «‰ÂÏ ‰Ê⁄
+		
+
+		// let's tke the input ( arrival time & burst ) from the user 
+		cout << "Please insert the number of processes\n ";
+			cin >> no_of_processes;
+			for (int i = 1; i <= no_of_processes; i++)
+			{
+				double x,y;
+				cout <<  "insert the arrival time of process number: " << i << endl;
+				cin >> x ;
+				arrivaltime.Add(x);
+				cout << "-----------------------------------" << endl;
+				cout <<  "insert the burst of process number: " << i << endl;
+				cin >> y;
+				burst.Add(y);
+				cout << "-----------------------------------" << endl;
+			}
+			
+			
+
         switch(choice)
         {
         case 1:
-            int no_of_processes;
-			LinkedList arrival_time;
-			LinkedList burst;
-			cout<<"FCFS: "<<endl;
-			cout << "Please insert the number of processes\n ";
-			cin >> no_of_processes;
-			
+            cout<<"FCFS: "<<endl;
 			break;
 		case 2:
 			cout<<"2";
