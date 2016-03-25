@@ -21,8 +21,8 @@ private:
 	Node* head;
 
 	string name;
-	double arrival_time;
-	double burst;
+	int arrival_time;
+	int burst;
 public:
 	
 	LinkedList() { head = nullptr; }
@@ -32,7 +32,7 @@ public:
 		return true; 
 	return false;
 	}
-	void Add(double item) 
+	void Add(int item) 
 	{
 		if (isEmpty())
 		{
@@ -51,9 +51,30 @@ public:
 			tmp->setNext(nw);
 		}
 	}
-	void sort(LinkedList x)
+	void sort()
 	{
-		
+     Node *ptr, *s;
+    int value;
+    if (head == NULL)
+    {
+        cout<<"The List is empty"<<endl;
+        return;
+    }
+    ptr = head;
+    while (ptr != NULL)
+    {
+        for (s = ptr->next;s !=NULL;s = s->next)
+        {
+            if (ptr->data > s->data)
+            {
+                value = ptr->data;
+                ptr->data = s->data;
+                s->data = value;
+            }
+        }
+        ptr = ptr->next;
+    }
+
 	}
 	void printAll()
 	{
@@ -75,7 +96,7 @@ public:
 	{
 		return name;
 	}
-	void set_arrival_time (double t)
+	void set_arrival_time (int t)
 	{
 		arrival_time=t;
 	}
@@ -87,7 +108,7 @@ public:
 	{
 		burst=b;
 	}
-	double get_burst ()
+	int get_burst ()
 	{
 		return burst;
 	}
@@ -150,7 +171,7 @@ int main()
 			cin >> no_of_processes;
 			for (int i = 1; i <= no_of_processes; i++)
 			{
-				double x,y;
+				int x,y;
 				cout <<  "insert the arrival time of process number: " << i << endl;
 				cin >> x ;
 				arrivaltime.Add(x);
@@ -160,8 +181,8 @@ int main()
 				burst.Add(y);
 				cout << "-----------------------------------" << endl;
 			}
-			
-			
+			arrivaltime.sort();
+			arrivaltime.printAll();
 
         switch(choice)
         {
@@ -183,28 +204,3 @@ int main()
 		}
 		return 0;
 }
-
-/*	string name_of_schedulers="FCFS";
-	int no_of_processes=3;
-	int burst;
-	double arrival_time;
-	LinkedList arrival_time_linked_list;
-	LinkedList burst_linked_list;
-	for (int i = 1; i <= no_of_processes; i++)
-	{
-		cin >> arrival_time >> "\n";
-		arrival_time_linked_list.Add(arrival_time);
-		cin >> burst >> "\n" ;
-		burst_linked_list.Add(burst);
-	}
-		
-
-	
-	l1.Add(9);
-	l1.Add(3);
-	l1.printAll();
-	
-	return 0 ;
-}
-
-*/
