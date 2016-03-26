@@ -72,5 +72,31 @@ int processes::get_priority()
 		l.Add(p);
 		std::cin>> lock;
 		if (lock=='s') { break; }	}
+		switch (choice)
+		{
+		case 1:;//FCFS
+		 case 2:
+			 shortJobNon(l);
+		 case 3:;//RR
+		 case 4:;//priority
 		}
+		}
+  void processes::shortJobNon(linkedList &l)
+ {
+	 node* tmp;
+	 l.sort(1);
+	 for (tmp = l.getHead(); tmp->getNext() != nullptr; tmp = tmp->getNext())
+	 {
+		 if ((tmp->get_Data().get_arrival_time()) == (tmp->getNext()->get_Data().get_arrival_time()))
+		 {
+			 if ((tmp->get_Data().get_burst()) > (tmp->getNext()->get_Data().get_burst()))
+			 {
+				 processes tmp1 = tmp->get_Data();
+				 tmp->get_Data() = tmp->getNext()->get_Data();
+				 tmp->get_Data() = tmp1;
+
+			 }
+		 }
+	 }
+ }
 

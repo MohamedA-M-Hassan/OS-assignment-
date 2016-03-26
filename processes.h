@@ -21,7 +21,7 @@ public:
 	void set_priority(int pri);
 	int get_priority();
 	static void create_Process(linkedList &l);
-
+	static void shortJobNon(linkedList &l);
 
 
 };
