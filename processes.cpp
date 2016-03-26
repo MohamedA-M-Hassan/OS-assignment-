@@ -32,12 +32,12 @@ int processes::get_priority()
 {
 	return priority;
 }
-
- void processes:: create_Process(linkedList l)
+ void processes:: create_Process(linkedList &l)
 {
 	std::string process_name;
 	int choice, Arrivetime, BrustTime,priorityy;
 	char lock='a';
+	processes p;
 	std::cout << std::endl << "---------------------------------" << std::endl;
 	std::cout << std::endl << "Types of schedulers supported:" << std::endl;
 	std::cout << std::endl << "---------------------------------" << std::endl;
@@ -61,10 +61,15 @@ int processes::get_priority()
 		std::cin >> BrustTime;
 		if (choice == 3)
 		{
-			std::cout << "enter brust time" << std::endl;
+			std::cout << "enter priority" << std::endl;
 			std::cin >> priorityy;
-
+			p.set_priority(priorityy);
 		}
+		p.set_name_of_process(process_name);
+		p.set_arrival_time(Arrivetime);
+		p.set_burst(BrustTime);
+		p.set_priority(0);
+		l.Add(p);
 		std::cin>> lock;
 		if (lock=='s') { break; }	}
 		}

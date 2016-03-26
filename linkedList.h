@@ -11,6 +11,8 @@ public:
 	node* getHead();
 	bool isEmpty();
 	void Add(processes item);
+	void printAll();
+    void sort(int type);
 
 
 };

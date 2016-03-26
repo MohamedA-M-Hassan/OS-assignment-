@@ -20,7 +20,7 @@ public:
 	int get_burst();
 	void set_priority(int pri);
 	int get_priority();
-	static void create_Process(linkedList l);
+	static void create_Process(linkedList &l);
 
 
 

@@ -34,14 +34,60 @@ void linkedList::Add(processes item)
 		tmp->setNext(nw);
 	}
 }
-/*void printAll()
+void linkedList:: printAll()
 {
-Node* tmp = head;
-while (tmp != nullptr)
-{
-std::cout << tmp->data <<std::endl;
-tmp = tmp->getNext();
+	node* tmp = head;
+	while (tmp != nullptr)
+	{
+	std::cout << tmp->proc.get_name_of_process() <<std::endl;
+	tmp = tmp->getNext();
+	}
 }
-}*/
+void linkedList::sort(int type )
+{
+	node* ptr;
+	node* s;
+	processes value;
+	if (head == NULL)
+	{
+		std::cout << "The List is empty" << std::endl;
+		return;
+	}
+	ptr = head;
+	while (ptr != NULL)
+	{
+		for (s = ptr->next; s != NULL; s = s->next)
+		{
+			switch (type)
+			{
+			case 1:
+				if (ptr->proc.get_arrival_time() > s->proc.get_arrival_time())
+				{
+					value = ptr->proc;
+					ptr->proc = s->proc;
+					s->proc = value;
+				}
 
+			case 2:
+				if (ptr->proc.get_burst() > s->proc.get_burst())
+				{
+					value = ptr->proc;
+					ptr->proc = s->proc;
+					s->proc = value;
+				}
+
+			case 3:
+				if (ptr->proc.get_priority() > s->proc.get_priority())
+				{
+					value = ptr->proc;
+					ptr->proc = s->proc;
+					s->proc = value;
+				}
+
+			}
+		}
+		ptr = ptr->next;
+	}
+
+}
 
