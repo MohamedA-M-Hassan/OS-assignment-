@@ -35,7 +35,7 @@ int processes::get_priority()
  void processes:: create_Process(linkedList &l)
 {
 	std::string process_name;
-	int choice, Arrivetime, BrustTime,priorityy;
+	int choice, Arrivetime, BrustTime,priorityy,type;
 	char lock='a';
 	processes p;
 	std::cout << std::endl << "---------------------------------" << std::endl;
@@ -81,22 +81,13 @@ int processes::get_priority()
 		 case 4:;//priority
 		}
 		}
-  void processes::shortJobNon(linkedList &l)
+ void processes::shortJobNon(linkedList &l)
  {
 	 node* tmp;
+	 node* n;
+	 processes value;
 	 l.sort(1);
-	 for (tmp = l.getHead(); tmp->getNext() != nullptr; tmp = tmp->getNext())
-	 {
-		 if ((tmp->get_Data().get_arrival_time()) == (tmp->getNext()->get_Data().get_arrival_time()))
-		 {
-			 if ((tmp->get_Data().get_burst()) > (tmp->getNext()->get_Data().get_burst()))
-			 {
-				 processes tmp1 = tmp->get_Data();
-				 tmp->get_Data() = tmp->getNext()->get_Data();
-				 tmp->get_Data() = tmp1;
+	 l.sort(2);
 
-			 }
-		 }
-	 }
+
  }
-

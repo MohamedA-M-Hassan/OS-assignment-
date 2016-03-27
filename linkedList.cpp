@@ -42,7 +42,7 @@ void linkedList:: printAll()
 	tmp = tmp->getNext();
 	}
 }
-void linkedList::sort(int type )
+void linkedList::sort(int type)
 {
 	node* ptr;
 	node* s;
@@ -68,13 +68,16 @@ void linkedList::sort(int type )
 				}
 
 			case 2:
-				if (ptr->proc.get_burst() > s->proc.get_burst())
-				{
-					value = ptr->proc;
-					ptr->proc = s->proc;
-					s->proc = value;
-				}
 
+				if (ptr->get_Data().get_arrival_time() == s->get_Data().get_arrival_time())
+				{
+					if (ptr->proc.get_burst() > s->proc.get_burst())
+					{
+						value = ptr->proc;
+						ptr->proc = s->proc;
+						s->proc = value;
+					}
+				}
 			case 3:
 				if (ptr->proc.get_priority() > s->proc.get_priority())
 				{
@@ -89,4 +92,3 @@ void linkedList::sort(int type )
 	}
 
 }
-
