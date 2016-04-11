@@ -11,7 +11,7 @@ private:
 public:
 	node(processes d);
 	void setData(processes d);
-	processes get_Data();
+	processes& get_Data();
 	void setNext(node* n);
 	node* getNext();
 	friend class linkedList;

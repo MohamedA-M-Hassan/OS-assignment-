@@ -79,13 +79,15 @@ void linkedList::sort(int type)
 					}
 				}
 			case 3:
-				if (ptr->proc.get_priority() > s->proc.get_priority())
+				if (ptr->get_Data().get_arrival_time() == s->get_Data().get_arrival_time())
 				{
-					value = ptr->proc;
-					ptr->proc = s->proc;
-					s->proc = value;
+					if (ptr->proc.get_priority() > s->proc.get_priority())
+					{
+						value = ptr->proc;
+						ptr->proc = s->proc;
+						s->proc = value;
+					}
 				}
-
 			}
 		}
 		ptr = ptr->next;

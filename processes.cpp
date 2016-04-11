@@ -48,6 +48,12 @@ int processes::get_priority()
 	std::cout << "------------------------------------" << std::endl;
 	std::cout << "Enter your choice : ";
 	std::cin >> choice;
+	if (choice == 2 || choice == 3)
+	{
+		std::cout << "1.Non pre-emptive" << std::endl;
+		std::cout << "2.pre-emptive" << std::endl;
+		std::cin >> type;
+	}
 	std::cout << "enter S to stop adding process or A to continue" << std::endl << std::endl;
 	std::cout << "----------------------------------------------------" << std::endl;
 
@@ -68,26 +74,123 @@ int processes::get_priority()
 		p.set_name_of_process(process_name);
 		p.set_arrival_time(Arrivetime);
 		p.set_burst(BrustTime);
-		p.set_priority(0);
 		l.Add(p);
 		std::cin>> lock;
 		if (lock=='s') { break; }	}
-		switch (choice)
+	 if(choice==1)
+	 {;//FCFS
+	 }
+	 else if (choice == 2)
+	 {
+		 switch (type)
+		 {
+		 case 1: { shortJobNon(l); }
+		 case 2: { shortJobPre(l); }
+		 }
+	 }
+	 else if(choice== 3) 
+	{
+		switch (type)
 		{
-		case 1:;//FCFS
-		 case 2:
-			 shortJobNon(l);
-		 case 3:;//RR
-		 case 4:;//priority
+		case 1: { PriorityNon(l); }
+		case 2: { PriorityPre(l); }
 		}
+	}
+	else if(choice== 4)
+	{
+		;//RR
+	}
+	else std::cout << "Error !" << std::endl;
 		}
  void processes::shortJobNon(linkedList &l)
  {
-	 node* tmp;
-	 node* n;
-	 processes value;
 	 l.sort(1);
 	 l.sort(2);
+	 l.printAll();
+ }
+ void processes::shortJobPre(linkedList &l)
+ {
 
+	 node* tmp;
+	 node* n;
+	 int remaining, clock,count;
+	 l.sort(1);
+	 l.sort(2);
+	 clock = l.getHead()->get_Data().get_arrival_time();
+	 for (tmp = l.getHead(); tmp != nullptr; tmp = tmp->getNext())
+	 {
+		 count = 1;
+		 remaining = tmp->get_Data().get_burst();
+	 loop:
+		 for (n = l.getHead(); n != nullptr; n = n->getNext())
+		 {
+			 if (tmp->get_Data().get_burst() > n->get_Data().get_burst() && (clock == n->get_Data().get_arrival_time() || n->get_Data().get_arrival_time() < clock) && n->get_Data().get_burst() != 0)
+			 {
+				 processes p = n->get_Data();
+				 n->setData(tmp->get_Data());
+				 tmp->setData(p);
+				 remaining = tmp->get_Data().get_burst();
+				 std::cout << tmp->get_Data().get_name_of_process() << std::endl;
+				 count++;
+			 }
+		 }
+		 
+		 while (remaining != 0)
+		 {
+			 if(count ==1 ){
+				 std::cout << tmp->get_Data().get_name_of_process() << std::endl;
+				 count++;
+			 }
+			 remaining--;
+			 tmp->get_Data().set_burst(remaining);
+			 clock++;
+			 goto loop;
+		 }
+	 }
+ }
+ void processes::PriorityNon(linkedList &l)
+	 {
+		 l.sort(1);
+		 l.sort(3);
+		 l.printAll();
+	 }
+ void processes::PriorityPre(linkedList &l)
+ {
+	 node* tmp;
+	 node* n;
+	 int remaining, clock, count;
+	 l.sort(1);
+	 l.sort(2);
+	 clock = l.getHead()->get_Data().get_arrival_time();
+	 for (tmp = l.getHead(); tmp != nullptr; tmp = tmp->getNext())
+	 {
+		 count = 1;
+		 remaining = tmp->get_Data().get_burst();
+	 loop:
+		 for (n = l.getHead(); n != nullptr; n = n->getNext())
+		 {
+			 if (tmp->get_Data().get_priority() > n->get_Data().get_priority() && (clock == n->get_Data().get_arrival_time() || n->get_Data().get_arrival_time() < clock) && (n->get_Data().get_burst() != 0))
+			 {
+				 processes p = n->get_Data();
+				 n->setData(tmp->get_Data());
+				 tmp->setData(p);
+				 remaining = tmp->get_Data().get_burst();
+				 std::cout << tmp->get_Data().get_name_of_process() << std::endl;
+				 count++;
+			 }
+		 }
 
+		 while (remaining != 0)
+		 {
+			 if (count == 1) 
+			 {  
+				 std::cout << tmp->get_Data().get_name_of_process() << std::endl;
+				 count++;
+			 }
+			 remaining--;
+			 tmp->get_Data().set_burst(remaining);
+			 clock++;
+			 goto loop;
+		 }
+	   }
  }
