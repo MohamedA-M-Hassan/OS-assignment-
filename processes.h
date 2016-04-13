@@ -7,20 +7,28 @@ class processes
 {
 private:
 	std::string name;
-	int arrival_time;
-	int burst;
-	int priority;
+	float arrival_time;
+	float burst;
+	float priority;
+	float dep ;
+	float timeTaked;
 public:
 
 	void set_name_of_process(std::string n);
 	std::string get_name_of_process();
-	void set_arrival_time(int t);
-	int get_arrival_time();
-	void set_burst(int b);
-	int get_burst();
-	void set_priority(int pri);
-	int get_priority();
+	void set_arrival_time(float t);
+	float get_arrival_time();
+	void set_burst(float b);
+	float get_burst();
+	void set_priority(float pri);
+	float get_priority();
+	void set_dep(float d);
+	float get_dep();
+	void set_timeTaked(float t);
+	float get_timeTaked();
 	static void create_Process(linkedList &l);
+	static void waitingpre(linkedList &l);
+	static void waitingNon(linkedList &l);
 	static void FCFS(linkedList &l);
 	static void shortJobNon(linkedList &l);
 	static void shortJobPre(linkedList &l);

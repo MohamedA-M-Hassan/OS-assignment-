@@ -133,19 +133,17 @@ void linkedList:: print_as_FCFS()
 	}
 
 	std::cout <<std::endl<<std::endl;
-	std::cout << "avg waiting time "  << aw << std::endl; // *****************
-	// std::cout << no_p << "\n" << arr_sum << "\n";
-	// std::cout << z << "\n" ;
 	float q;
 	q = (float)(z-arr_sum)/no_p ;
 	std::cout << "Avg Waiting Time = " << q << "\n";
 }
-void linkedList::print_as_RR()
+void linkedList::print_as_RR(linkedList &l)
 {
+	float clock = l.getHead()->get_Data().get_arrival_time();
 	std::cout << std::endl << std::endl;
 	std::cout << "the Gannt chart of excuting the processes " << std::endl;
 loop:
-	node* tmp = head;
+	node* tmp = l.getHead();
 
 	while (tmp != nullptr)
 	{
@@ -158,7 +156,9 @@ loop:
 			{
 				std::cout << "_";
 			}
+			clock+=x_quantum;
 			tmp->proc.set_burst(number_of_burst_to_use_in_draw - x_quantum);
+			if (tmp->get_Data().get_burst() == 0) { tmp->get_Data().set_dep(clock); }
 			std::cout << "]";
 
 		}
@@ -175,15 +175,13 @@ loop:
 			std::cout << "]";
 
 		}
-		else {
-			//tmp = tmp->getNext();
-		}
-		//	cout << "]";
 		tmp = tmp->getNext();
 	}
-	for (tmp = head; tmp != nullptr; tmp = tmp->getNext())
+	for (tmp = l.getHead(); tmp != nullptr; tmp = tmp->getNext())
 
 	{
 		if (tmp->proc.get_burst()) goto loop;
 	}
+	std::cout << std::endl;
+	processes::waitingpre(l);
 }

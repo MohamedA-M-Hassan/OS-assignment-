@@ -14,7 +14,7 @@ public:
 	void printAll();
     void sort(int type);
 	void print_as_FCFS();
-	void print_as_RR();
+	static void print_as_RR(linkedList &l);
 
 
 

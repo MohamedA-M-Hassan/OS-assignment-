@@ -9,34 +9,51 @@ std::string processes::get_name_of_process()
 {
 	return name;
 }
-void processes::set_arrival_time(int t)
+void processes::set_arrival_time(float t)
 {
 	arrival_time = t;
 }
-int processes::get_arrival_time()
+float processes::get_arrival_time()
 {
 	return arrival_time;
 }
-void processes::set_burst(int b)
+void processes::set_burst(float b)
 {
 	burst = b;
 }
-int processes::get_burst()
+float processes::get_burst()
 {
 	return burst;
 }
-void processes::set_priority(int pri)
+void processes::set_priority(float pri)
 {
 	priority = pri;
 }
-int processes::get_priority()
+float processes::get_priority()
 {
 	return priority;
+}
+void processes::set_dep(float d)
+{
+	dep = d;
+}
+float processes::get_dep()
+{
+	return dep;
+}
+void processes::set_timeTaked(float t)
+{
+	timeTaked = t;
+}
+float processes::get_timeTaked()
+{
+	return timeTaked;
 }
 void processes:: create_Process(linkedList &l)
 {
 	std::string process_name;
-	int choice, Arrivetime, BrustTime,priorityy,type;
+	float  Arrivetime, BrustTime, priorityy;
+    int type, choice;
 	char lock='a';
 	processes p;
 	std::cout << std::endl << "---------------------------------" << std::endl;
@@ -75,6 +92,7 @@ void processes:: create_Process(linkedList &l)
 		p.set_name_of_process(process_name);
 		p.set_arrival_time(Arrivetime);
 		p.set_burst(BrustTime);
+		p.set_timeTaked(BrustTime);
 		l.Add(p);
 		std::cin>> lock;
 		if (lock=='s' || lock == 'S') {
@@ -110,6 +128,51 @@ void processes:: create_Process(linkedList &l)
 	}
 	else std::cout << "Error !" << std::endl;
 		}
+void processes::waitingpre(linkedList &l)
+{
+	node* wait = l.getHead();
+	float dep = 0, arr = 0, burst = 0, counter = 0;
+	while (wait != nullptr)
+	{
+		dep += wait->get_Data().get_dep();
+		arr += wait->get_Data().get_arrival_time();
+		burst += wait->get_Data().get_timeTaked();
+		counter++;
+		wait = wait->getNext();
+	}
+	std::cout << (dep - arr - burst) / counter << std::endl;
+}
+void processes::waitingNon(linkedList &l)
+{
+	l.printAll();
+	int arr_sum = 0, no_p = 0;
+	float burst = 0, arr = 0, aw = 0;
+	int z = 0;
+	node* tmp = l.getHead();
+	while (tmp != nullptr)
+	{
+		no_p++;
+		arr_sum += tmp->get_Data().get_arrival_time();
+		tmp = tmp->getNext();
+	}
+	node* ta = l.getHead();
+	int no_p2 = no_p;
+
+			while (ta != nullptr && no_p2 != 0)
+			{
+				int k = ta->get_Data().get_burst();
+				int h = k * (no_p2 - 1);
+				z = z + h;
+				no_p2--;
+				ta = ta->getNext();
+			}
+
+			std::cout << std::endl;
+			float q;
+			q = (float)(z - arr_sum) / no_p;
+			std::cout << "Avg Waiting Time = " << q << "\n";
+		
+}
 void processes::FCFS(linkedList &l)
  {
 	 l.sort(1);
@@ -120,13 +183,14 @@ void processes::FCFS(linkedList &l)
  {
 	 l.sort(1);
 	 l.sort(2);
-	 l.printAll();
+	 waitingNon(l);
  }
  void processes::shortJobPre(linkedList &l)
  {
 	 node* tmp;
 	 node* n;
-	 int remaining, clock,count;
+	 float remaining, clock;
+	 int count;
 	 l.sort(1);
 	 l.sort(2);
 	 clock = l.getHead()->get_Data().get_arrival_time();
@@ -155,23 +219,31 @@ void processes::FCFS(linkedList &l)
 				 count++;
 			 }
 			 remaining--;
-			 tmp->get_Data().set_burst(remaining);
 			 clock++;
+			 tmp->get_Data().set_burst(remaining);
+			 if (tmp->get_Data().get_burst() == 0)
+			 {
+				 tmp->get_Data().set_dep(clock);
+			 }
 			 goto loop;
 		 }
 	 }
+	 waitingpre(l);
  }
  void processes::PriorityNon(linkedList &l)
 	 {
 		 l.sort(1);
 		 l.sort(3);
-		 l.printAll();
+		 //l.printAll();
+		 waitingNon(l);
+
 	 }
  void processes::PriorityPre(linkedList &l)
  {
 	 node* tmp;
 	 node* n;
-	 int remaining, clock, count;
+	 float remaining, clock;
+	 int count;
 	 l.sort(1);
 	 l.sort(2);
 	 clock = l.getHead()->get_Data().get_arrival_time();
@@ -201,14 +273,21 @@ void processes::FCFS(linkedList &l)
 				 count++;
 			 }
 			 remaining--;
-			 tmp->get_Data().set_burst(remaining);
 			 clock++;
+			 tmp->get_Data().set_burst(remaining);
+			 if (tmp->get_Data().get_burst() == 0)
+			 {
+				 tmp->get_Data().set_dep(clock);
+			 }
+
 			 goto loop;
 		 }
 	   }
+	 waitingpre(l);
+
  }
  void processes::RoundRobin(linkedList &l)
  {
 	 l.sort(1);
-	 l.print_as_RR();
+	 linkedList::print_as_RR(l);
  }
